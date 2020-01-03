@@ -1,0 +1,7 @@
+extends:
+  - '@rixo'
+
+overrides:
+  - files: ["lib/**/*"]
+    env:
+      node: true
