@@ -1,7 +1,14 @@
 extends:
   - '@rixo'
 
+globals:
+  setTimeout: true
+
 overrides:
+  - files: ["index.js", "cli.js"]
+    env:
+      node: true
+      browser: true
   - files: ["lib/**/*"]
     env:
       node: true

@@ -152,7 +152,10 @@ const onlys = [
   ],
   [
     'zoar harness: enabled, auto',
-    createZoarHarness({ only: { enabled: true, auto: true, skip: false } }),
+    createZoarHarness({
+      auto: false,
+      only: { enabled: true, auto: true, skip: false },
+    }),
   ],
 ].map(async ([title, harness]) => {
   const getExpectedSuccess = runWithOnly(harness)
@@ -177,7 +180,10 @@ const noners = [
   ],
   [
     'zoar harness: enabled, auto',
-    createZoarHarness({ only: { enabled: true, auto: true, skip: false } }),
+    createZoarHarness({
+      auto: false,
+      only: { enabled: true, auto: true, skip: false },
+    }),
   ],
 ].map(async ([title, harness]) => {
   const getExpectedSuccess = runAutoNone(harness)
@@ -209,7 +215,8 @@ const throwers = [
   ],
   [
     'zoar harness: !enabled, auto',
-    () => createZoarHarness({ only: { enabled: false, auto: true } }),
+    () =>
+      createZoarHarness({ auto: false, only: { enabled: false, auto: true } }),
     false,
   ],
 ].map(async ([title, createHarness, immediate]) => meta => {
@@ -263,15 +270,15 @@ const promises = [...onlys, ...noners, ...throwers]
 
 const call = (...args) => fn => fn(...args)
 
-const meta = createZoarHarness()
+const meta = createZoarHarness({ auto: true })
 
 meta.test('only', async t => {
   const results = await Promise.all(promises)
   results.forEach(call(t))
 })
 
-meta.report().then(() => {
-  if (!meta.pass) {
-    process.exit(1)
-  }
-})
+// meta.report().then(() => {
+//   if (!meta.pass) {
+//     process.exit(1)
+//   }
+// })
