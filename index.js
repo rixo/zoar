@@ -40,7 +40,12 @@ autoStart = true
 
 const start = () => {
   if (autoStart) {
-    defaultTestHarness.report(defaultReporter())
+    defaultTestHarness.report(defaultReporter()).then(() => {
+      if (typeof process === 'undefined') return
+      if (!defaultTestHarness.pass) {
+        process.exit(1)
+      }
+    })
   }
 }
 

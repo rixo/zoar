@@ -1,7 +1,13 @@
 import { createHarness as createZoraHarness, mochaTapLike } from 'zora'
 import { withOnly, withAutoOnly } from '@/lib/only'
+import { reporter } from 'zora-node-reporter'
 
 import { createHarness as createZopHarness } from '..'
+
+const blackHole = async stream => {
+  for await (const message of stream) {
+  }
+}
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -160,16 +166,16 @@ const onlys = [
   .map(normalize)
   .map(async ([title, harness, only]) => {
     const getExpectedSuccess = runWithOnly(only(harness))
-    await harness.report()
+    await harness.report(blackHole)
     const expectedSuccess = getExpectedSuccess()
     return meta => {
       meta.test(title, meta => {
-        meta.is(
+        meta.equal(
           harness.successCount,
           expectedSuccess,
           `expects ${expectedSuccess} crumbs`
         )
-        meta.is(harness.failureCount, 0, 'there was no failures')
+        meta.equal(harness.failureCount, 0, 'there was no failures')
       })
     }
   })
@@ -190,19 +196,19 @@ const noners = [
     const o = only(harness)
     const getExpectedSuccess = runAutoNone(o)
     if (o.report) {
-      await o.report()
+      await o.report(blackHole)
     } else {
-      await harness.report()
+      await harness.report(blackHole)
     }
     const expectedSuccess = getExpectedSuccess()
     return meta => {
       meta.test(`no top level only: ${title}`, meta => {
-        meta.is(
+        meta.equal(
           harness.successCount,
           expectedSuccess,
           `expects ${expectedSuccess} crumbs`
         )
-        meta.is(harness.failureCount, 0, 'there was no failures')
+        meta.equal(harness.failureCount, 0, 'there was no failures')
       })
     }
   })
@@ -225,12 +231,12 @@ const throwers = [
     t.test('throws on only at top level', t => {
       const o = createHarness()
       o.only('', () => {})
-      t.throws(() => o.report())
+      t.throws(() => o.report(blackHole))
     })
     t.test('throws on focus at top level', t => {
       const o = createHarness()
       o.focus('', () => {})
-      t.throws(() => o.report())
+      t.throws(() => o.report(blackHole))
     })
     t.test('throws immediately on nested only', async t => {
       const o = createHarness()
@@ -239,7 +245,7 @@ const throwers = [
           t.only('ok', () => {})
         })
       })
-      await o.report()
+      await o.report(blackHole)
     })
     t.test('throws immediately on nested focus', async t => {
       const o = createHarness()
@@ -248,7 +254,7 @@ const throwers = [
           t.focus('ok', () => {})
         })
       })
-      await o.report()
+      await o.report(blackHole)
     })
   })
 })
@@ -257,15 +263,15 @@ const promises = [...onlys, ...noners, ...throwers]
 
 const call = (...args) => fn => fn(...args)
 
-const noop = () => {}
-const log = console.log
-// console.log = noop
-Promise.all(promises).then(results => {
-  console.log('\n===== Assertion counting =====\n')
-  console.log = log
-  const meta = createZoraHarness()
+const meta = createZoraHarness()
 
-  results.forEach(call(meta))
+meta.test('only', async t => {
+  const results = await Promise.all(promises)
+  results.forEach(call(t))
+})
 
-  return meta.report(mochaTapLike)
+meta.report(reporter()).then(() => {
+  if (!meta.pass) {
+    process.exit(1)
+  }
 })
