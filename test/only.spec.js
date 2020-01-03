@@ -1,20 +1,20 @@
 import { createHarness as createZoraHarness, mochaTapLike } from 'zora'
-import { withOnly } from '@/lib/only'
+import { withOnly, withAutoOnly } from '@/lib/only'
 
 import { createHarness as createZopHarness } from '..'
 
-const runTest = ({ test, only, focus }) => {
-  const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
+const shouldRun = (t, msg = 'should run') => {
+  t.ok(true, msg)
+}
+
+const shouldNotRun = (t, msg = 'should not run') => {
+  t.fail(msg)
+}
+
+const runWithOnly = ({ test, only, focus }) => {
   let expectedSuccess = 0
-
-  const shouldRun = (t, msg = 'should run') => {
-    t.ok(true, msg)
-  }
-
-  const shouldNotRun = (t, msg = 'should not run') => {
-    t.fail(msg)
-  }
 
   // track the number of expected run for assertions counting
   const track = {
@@ -77,15 +77,185 @@ const runTest = ({ test, only, focus }) => {
   return () => expectedSuccess
 }
 
-const promises = [
-  [createZoraHarness(), withOnly({ enabled: true, skip: false, auto: false })],
-  [createZopHarness({ only: { enabled: true, auto: true } })],
-].map(async ([harness, only = () => harness]) => {
-  const getExpectedSuccess = runTest(only(harness))
-  await harness.report()
-  const expectedSuccess = getExpectedSuccess()
-  return { harness, expectedSuccess }
+const runAutoNone = ({ test, only, focus }) => {
+  let expectedSuccess = 0
+
+  // track the number of expected run for assertions counting
+  const track = {
+    get shouldRun() {
+      expectedSuccess++
+      return shouldRun
+    },
+  }
+
+  test("test don't run when only is enabled", track.shouldRun)
+
+  test('2. test', t => {
+    track.shouldRun(t)
+
+    t.test('test > 1. test', track.shouldRun)
+
+    t.only('test > 2. only', t => {
+      track.shouldRun(t)
+      t.test('test > only > test (before)', shouldNotRun)
+      t.only('test > only > only', track.shouldRun)
+      t.test('test > only > test (after)', shouldNotRun)
+    })
+
+    t.focus('test > 3. focus', track.shouldRun)
+
+    t.test('test > 4. test', track.shouldRun)
+  })
+
+  test('3. focus', t => {
+    track.shouldRun(t)
+    t.test('focus > 1. test', track.shouldRun)
+    t.only('focus > 2. only', t => {
+      track.shouldRun(t)
+      t.test('focus > only > 1. test', shouldNotRun)
+      t.only('focus > only > 2. only', track.shouldRun)
+      t.test('focus > only > 3. test', shouldNotRun)
+    })
+    t.focus('focus > 3. focus', track.shouldRun)
+    t.test('focus > 4. test', track.shouldRun)
+  })
+
+  test('4. test', track.shouldRun)
+
+  test('5. test async', async t => {
+    track.shouldRun(t)
+    const { shouldRun } = track
+    await t.test('test async > 1. test', async t => {
+      shouldRun(t)
+      await wait(5)
+    })
+    t.only('test async > 2. only', track.shouldRun)
+  })
+
+  return () => expectedSuccess
+}
+
+const normalize = ([title, harness, only = () => harness]) => [
+  title,
+  harness,
+  only,
+]
+
+const onlys = [
+  [
+    'zora harness: enabled, !auto',
+    createZoraHarness(),
+    withOnly({ enabled: true, auto: false, skip: false }),
+  ],
+  [
+    'zora harness: enabled, auto',
+    createZoraHarness(),
+    withOnly({ enabled: true, auto: true, skip: false }),
+  ],
+  [
+    'zop harness: enabled, auto',
+    createZopHarness({ only: { enabled: true, auto: true, skip: false } }),
+  ],
+]
+  .map(normalize)
+  .map(async ([title, harness, only]) => {
+    const getExpectedSuccess = runWithOnly(only(harness))
+    await harness.report()
+    const expectedSuccess = getExpectedSuccess()
+    return meta => {
+      meta.test(title, meta => {
+        meta.is(
+          harness.successCount,
+          expectedSuccess,
+          `expects ${expectedSuccess} crumbs`
+        )
+        meta.is(harness.failureCount, 0, 'there was no failures')
+      })
+    }
+  })
+
+const noners = [
+  [
+    'zora harness: !enabled, auto',
+    createZoraHarness(),
+    withOnly({ enabled: false, auto: true, skip: false }),
+  ],
+  [
+    'zop harness: enabled, auto',
+    createZopHarness({ only: { enabled: true, auto: true, skip: false } }),
+  ],
+]
+  .map(normalize)
+  .map(async ([title, harness, only]) => {
+    const o = only(harness)
+    const getExpectedSuccess = runAutoNone(o)
+    if (o.report) {
+      await o.report()
+    } else {
+      await harness.report()
+    }
+    const expectedSuccess = getExpectedSuccess()
+    return meta => {
+      meta.test(`no top level only: ${title}`, meta => {
+        meta.is(
+          harness.successCount,
+          expectedSuccess,
+          `expects ${expectedSuccess} crumbs`
+        )
+        meta.is(harness.failureCount, 0, 'there was no failures')
+      })
+    }
+  })
+
+const throwers = [
+  [
+    'zora harness: !enabled, !auto',
+    () => withOnly({ enabled: false, auto: false })(createZoraHarness()),
+    true,
+  ],
+  [
+    'zop harness: !enabled, auto',
+    () => createZopHarness({ only: { enabled: false, auto: true } }),
+    false,
+  ],
+].map(async ([title, createHarness, immediate]) => meta => {
+  meta.test('zop harness: !enabled, auto', async t => {
+    const createHarness = () =>
+      createZopHarness({ only: { enabled: false, auto: true } })
+    t.test('throws on only at top level', t => {
+      const o = createHarness()
+      o.only('', () => {})
+      t.throws(() => o.report())
+    })
+    t.test('throws on focus at top level', t => {
+      const o = createHarness()
+      o.focus('', () => {})
+      t.throws(() => o.report())
+    })
+    t.test('throws immediately on nested only', async t => {
+      const o = createHarness()
+      o.test('', t => {
+        t.throws(() => {
+          t.only('ok', () => {})
+        })
+      })
+      await o.report()
+    })
+    t.test('throws immediately on nested focus', async t => {
+      const o = createHarness()
+      o.test('', t => {
+        t.throws(() => {
+          t.focus('ok', () => {})
+        })
+      })
+      await o.report()
+    })
+  })
 })
+
+const promises = [...onlys, ...noners, ...throwers]
+
+const call = (...args) => fn => fn(...args)
 
 const noop = () => {}
 const log = console.log
@@ -94,13 +264,8 @@ Promise.all(promises).then(results => {
   console.log('\n===== Assertion counting =====\n')
   console.log = log
   const meta = createZoraHarness()
-  results.forEach(({ harness, expectedSuccess }) => {
-    meta.is(
-      harness.successCount,
-      expectedSuccess,
-      `expects ${expectedSuccess} crumbs`
-    )
-    meta.is(harness.failureCount, 0, 'there was no failures')
-  })
+
+  results.forEach(call(meta))
+
   return meta.report(mochaTapLike)
 })
