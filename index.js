@@ -1,9 +1,9 @@
-import { createHarness as createZoraHarness } from 'zora'
-import { mochaTapLike } from 'zora'
 import * as zora from 'zora'
 import { reporter } from 'zora-node-reporter'
 
 import { withAutoOnly } from './lib/only'
+
+const { createHarness: createZoraHarness } = zora
 
 // export { test, only, focus } from './lib/only'
 
@@ -18,7 +18,7 @@ const isOnlyEnabled = () => {
 }
 
 let autoStart = true
-let defaultReporter = reporter
+const defaultReporter = reporter
 
 export const createHarness = ({ only, ...opts } = {}) => {
   autoStart = false
@@ -36,13 +36,16 @@ const defaultTestHarness = createHarness({
   },
 })
 
+// createHarness sets it to false
 autoStart = true
 
-const start = () => {
+const start = async () => {
   if (autoStart) {
     defaultTestHarness.report(defaultReporter()).then(() => {
       if (typeof process === 'undefined') return
-      if (!defaultTestHarness.pass) {
+      if (defaultTestHarness.pass) {
+        process.exit(0)
+      } else {
         process.exit(1)
       }
     })
