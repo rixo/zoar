@@ -1,7 +1,9 @@
 import { createHarness as createZoraHarness } from 'zora'
 import { withOnly } from '@/lib/only'
 
-import { createHarness as createZoarHarness } from '..'
+import * as zoar from '..'
+
+const { createHarness: createZoarHarness } = zoar
 
 const blackHole = async stream => {
   // eslint-disable-next-line no-unused-vars
@@ -270,15 +272,7 @@ const promises = [...onlys, ...noners, ...throwers]
 
 const call = (...args) => fn => fn(...args)
 
-const meta = createZoarHarness({ auto: true })
-
-meta.test('only', async t => {
+zoar.test('only', async t => {
   const results = await Promise.all(promises)
   results.forEach(call(t))
 })
-
-// meta.report().then(() => {
-//   if (!meta.pass) {
-//     process.exit(1)
-//   }
-// })
