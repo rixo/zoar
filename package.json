@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test:autostart:default": "node -r esm test/autostart.spec.js",
-    "test:autostart:only": "cross-env ONLY=1 node -r esm test/autostart-only.spec.xx.js",
+    "test:autostart:only": "cross-env ONLY=1 node -r esm test/autostart-only.spec.x.js",
     "test:autostart": "run-p test:autostart:*",
     "test:only": "node -r esm test/only.spec.x.js",
     "test": "zoar *.spec{.x,}.js"
