@@ -1,9 +1,11 @@
 import * as zora from 'zora'
+import * as zorax from 'zorax'
 import { reporter } from 'zora-node-reporter'
 
 import { withAutoOnly } from './lib/only'
 
 const { createHarness: createZoraHarness } = zora
+// const { createHarness: createZoraxHarness } = zorax
 
 // export { test, only, focus } from './lib/only'
 
@@ -24,13 +26,19 @@ const autoStartListeners = []
 
 const compose = (...fns) => initial => fns.reduceRight((x, f) => f(x), initial)
 
-export const createHarness = ({ auto = true, only, ...opts } = {}) => {
+export const createHarness = ({
+  auto = true,
+  only,
+  zorax: useZorax = String(process.env.ZORAX) !== '0',
+  ...opts
+} = {}) => {
   hasCustomHarnesses = true
+  zorax.harness.auto(false)
   return compose(
     withDefaultReporter(),
     withAutoStart({ auto }),
     withAutoOnly(only),
-    createZoraHarness
+    useZorax ? () => zorax.harness : createZoraHarness
   )(opts)
 }
 
@@ -149,7 +157,41 @@ if (typeof window === 'undefined') {
   window.addEventListener('load', start)
 }
 
-export const { test, only, focus } = defaultTestHarness
+export const { test, skip, only, focus } = defaultTestHarness
+
+// {
+//   const { test } = zorax.harness
+//
+//   const wrapTest = ({ test }) => (desc, meta, run, ...rest) => {
+//     if (!Array.isArray(meta)) {
+//       run = meta
+//       meta = null
+//     }
+//     return test(
+//       desc,
+//       (t, ...rest) => {
+//         const tt = Object.create(t, {
+//           collect: {
+//             value: (...args) => {
+//               // console.log('>>> collect', args)
+//             },
+//           },
+//         })
+//         tt.test = wrapTest(tt)
+//         return run(tt, ...rest)
+//       },
+//       ...rest
+//     )
+//   }
+//
+//   zorax.harness.test = wrapTest(zorax.harness)
+//
+//   Object.defineProperty(zorax.harness, 'collect', {
+//     value: (...args) => {
+//       console.log('collect', args)
+//     },
+//   })
+// }
 
 // export const { test, only, focus } = withOnly({
 //   enabled: isOnlyEnabled(),
