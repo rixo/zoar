@@ -1,4 +1,8 @@
 #!/usr/bin/env node
-const esm = require('esm')
 
-esm(module)('./lib/cli')
+if (process.stdin.isTTY) {
+  require('./dist/zoar.js')
+} else {
+  const esm = require('esm')
+  esm(module)('./lib/pipe.run')
+}
