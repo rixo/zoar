@@ -4,27 +4,38 @@
   "author": "rixo <rixo@rixo.fr>",
   "license": "MIT",
   "main": "index.js",
+  "files": [
+    "dist"
+  ],
   "bin": {
-    "zoar": "cli.js"
+    "zoar": "dist/zoar.js"
   },
   "dependencies": {
     "arg": "^4.1.2",
     "cheap-watch": "^1.0.2",
+    "commander": "^4.1.0",
     "debug": "^4.1.1",
     "esm": "^3.2.25",
     "fast-glob": "^3.1.1",
     "find-up": "^4.1.0",
-    "micromatch": "^4.0.2",
-    "yargs": "^15.1.0",
+    "picomatch": "^2.2.1",
     "zora": "^3.1.8",
     "zora-node-reporter": "^0.0.1"
   },
   "devDependencies": {
     "@rixo/eslint-config": "^0.8.1",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-json": "^4.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
     "cross-env": "^6.0.3",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.29.1",
+    "zorax": "^0.0.1"
   },
   "scripts": {
+    "clean": "rm dist/*",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
     "test:autostart:default": "node -r esm test/autostart.spec.js",
     "test:autostart:only": "cross-env ONLY=1 node -r esm test/autostart-only.spec.x.js",
     "test:autostart": "run-p test:autostart:*",
