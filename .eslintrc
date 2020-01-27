@@ -9,6 +9,6 @@ overrides:
     env:
       node: true
       browser: true
-  - files: ["lib/**/*"]
+  - files: ["lib/**/*", "test/**/*"]
     env:
       node: true
