@@ -8,6 +8,7 @@ describe(__filename)
 
 describe('mergeTargets', () => {
   test('merges targets into their deep watching parents', t => {
+    // throw new Error('shit')
     const input = {
       cwd: '/app',
       pattern: [
