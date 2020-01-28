@@ -40,6 +40,7 @@
     "cross-env": "^6.0.3",
     "npm-run-all": "^4.1.5",
     "rollup": "^1.29.1",
+    "zoar": "^0.0.1-0",
     "zora": "^3.1.8",
     "zorax": "^0.0.2"
   },
@@ -51,6 +52,6 @@
     "test:autostart:only": "cross-env ONLY=1 node -r esm test/autostart-only.spec.x.js",
     "test:autostart": "run-p test:autostart:*",
     "test:only": "node -r esm test/only.spec.x.js",
-    "test": "echo pending"
+    "test": "zoar"
   }
 }

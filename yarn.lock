@@ -1549,9 +1549,22 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
-zora-node-reporter@rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.2-gitpkg:
-  version "0.0.1-rixo.2"
-  resolved "https://codeload.github.com/rixo/zora-reporters/tar.gz/50f0b5fbefca77221f538e05c6973788ddc9a123"
+zoar@^0.0.1-0:
+  version "0.0.1-0"
+  resolved "https://registry.yarnpkg.com/zoar/-/zoar-0.0.1-0.tgz#c972402873a386f6f200d545caf893350d81236a"
+  dependencies:
+    arg "^4.1.2"
+    cheap-watch "^1.0.2"
+    commander "^4.1.0"
+    debug "^4.1.1"
+    esm "^3.2.25"
+    fast-glob "^3.1.1"
+    find-up "^4.1.0"
+    picomatch "^2.2.1"
+    require-relative "^0.8.7"
+    source-map-support "^0.5.16"
+    zora-node-reporter rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg
+    zora-tap-reporter "^2.0.0"
 
 zora-node-reporter@rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg:
   version "0.0.1-rixo.3"
