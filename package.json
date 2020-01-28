@@ -51,6 +51,6 @@
     "test:autostart:only": "cross-env ONLY=1 node -r esm test/autostart-only.spec.x.js",
     "test:autostart": "run-p test:autostart:*",
     "test:only": "node -r esm test/only.spec.x.js",
-    "test": "dist/zoar.js"
+    "test": "echo pending"
   }
 }
