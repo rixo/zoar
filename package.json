@@ -19,6 +19,7 @@
     "fast-glob": "^3.1.1",
     "find-up": "^4.1.0",
     "picomatch": "^2.2.1",
+    "require-relative": "^0.8.7",
     "zora": "^3.1.8",
     "zora-node-reporter": "^0.0.1"
   },
