@@ -30,7 +30,7 @@ const makeExecutable = () => {
 }
 
 export default {
-  input: ['./lib/zoar.js'],
+  input: ['./lib/zoar.js', './lib/runner.js'],
   output: {
     format: 'cjs',
     dir: 'dist',
