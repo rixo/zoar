@@ -1549,14 +1549,22 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
-zora-node-reporter@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/zora-node-reporter/-/zora-node-reporter-0.0.1.tgz#6c71aef42da1ae422bbb556fee96bfa151b99e52"
+zora-node-reporter@rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.2-gitpkg:
+  version "0.0.1-rixo.2"
+  resolved "https://codeload.github.com/rixo/zora-reporters/tar.gz/50f0b5fbefca77221f538e05c6973788ddc9a123"
+
+zora-node-reporter@rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg:
+  version "0.0.1-rixo.3"
+  resolved "https://codeload.github.com/rixo/zora-reporters/tar.gz/002538be1e3fc28bc4bdca8e1bed15b20c8bd2e6"
+
+zora-tap-reporter@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/zora-tap-reporter/-/zora-tap-reporter-2.0.0.tgz#eeba3fea0bcb2fea2a6afe6cb04fa0fcb3095f63"
 
 zora@^3.1.8:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/zora/-/zora-3.1.8.tgz#84cf75a057005931058db43366cad8c75a21f04c"
 
-zorax@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/zorax/-/zorax-0.0.1.tgz#ddd52f084aeddca4a61072aa9e8fd0ff519c4b19"
+zorax@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/zorax/-/zorax-0.0.2.tgz#87783ba6e02d7e54e734eb9ce1785edd24babec5"
