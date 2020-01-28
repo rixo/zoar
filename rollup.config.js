@@ -42,6 +42,7 @@ export default {
     ...builtins,
     // NOTE zorax needs to be external to share global state
     'zorax',
+    'zora',
   ],
   plugins: [json(), resolve(), commonjs(), makeExecutable()],
 }
