@@ -37,7 +37,14 @@ describe('mergeTargets', () => {
         dir: '/app/test',
         deep: true,
         filenames: ['foo.js'],
-        globs: ['**/*.spec.js', 'bar/*.test.js'],
+        globs: ['**/*.spec.js'],
+        ignore: [],
+      },
+      {
+        dir: '/app/test/bar',
+        deep: false,
+        filenames: [],
+        globs: ['*.test.js'],
         ignore: [],
       },
     ]
@@ -49,15 +56,22 @@ describe('mergeTargets', () => {
     const input = {
       cwd: '/app',
       pattern: ['test/**/*.spec.js', 'test/foo.js', 'test/bar/*.test.js'],
-      ignore: ['test/node_modules/**'],
+      ignore: ['test/node_modules/**', 'test/bar/a*.test.js'],
     }
     const expected = [
       {
         dir: '/app/test',
         deep: true,
         filenames: ['foo.js'],
-        globs: ['**/*.spec.js', 'bar/*.test.js'],
-        ignore: ['node_modules/**'],
+        globs: ['**/*.spec.js'],
+        ignore: ['node_modules/**', 'bar/a*.test.js'],
+      },
+      {
+        dir: '/app/test/bar',
+        deep: false,
+        filenames: [],
+        globs: ['*.test.js'],
+        ignore: ['a*.test.js'],
       },
     ]
     const actual = mergeTargets(input)
@@ -66,17 +80,24 @@ describe('mergeTargets', () => {
 
   test('outside ignore', t => {
     const input = {
-      cwd: '/app',
-      pattern: ['test/**/*.spec.js', 'test/foo.js', 'test/bar/*.test.js'],
-      ignore: ['node_modules/**', 'test/nm'],
+      cwd: '/app/test',
+      pattern: ['**/*.spec.js', '../src/**/*.spec.js'],
+      ignore: ['node_modules/**', '**/ignore.me'],
     }
     const expected = [
       {
+        dir: '/app/src',
+        deep: true,
+        filenames: [],
+        globs: ['**/*.spec.js'],
+        ignore: ['**/ignore.me'],
+      },
+      {
         dir: '/app/test',
         deep: true,
-        filenames: ['foo.js'],
-        globs: ['**/*.spec.js', 'bar/*.test.js'],
-        ignore: ['nm'],
+        filenames: [],
+        globs: ['**/*.spec.js'],
+        ignore: ['node_modules/**', '**/ignore.me'],
       },
     ]
     const actual = mergeTargets(input)

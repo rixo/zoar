@@ -84,6 +84,88 @@ describe('mergeInputs', () => {
     t.eq(actual, expected)
   })
 
+  test('simplifies ignores', t => {
+    const actual = mergeInputs(
+      // .rc
+      {
+        cwd: '/app',
+        ignore: ['./node_modules', '**/.git'],
+      },
+      // cli
+      {
+        files: '*.spec.js',
+        cwd: '/app',
+        ignore: 'broken.test.js',
+      }
+    )
+    const expected = {
+      files: {
+        cwd: '/app',
+        pattern: '*.spec.js',
+        ignore: [
+          {
+            cwd: '/app',
+            pattern: ['./node_modules', '**/.git', 'broken.test.js'],
+          },
+        ],
+      },
+    }
+    t.eq(actual, expected)
+  })
+
+  test('dedups ignore patterns', t => {
+    const actual = mergeInputs(
+      // .rc
+      {
+        cwd: '/app',
+        ignore: ['./node_modules', '**/.git'],
+      },
+      // cli
+      {
+        files: '*.spec.js',
+        cwd: '/app',
+        ignore: ['./node_modules', 'broken.test.js'],
+      }
+    )
+    const expected = {
+      files: {
+        cwd: '/app',
+        pattern: '*.spec.js',
+        ignore: [
+          {
+            cwd: '/app',
+            pattern: ['./node_modules', '**/.git', 'broken.test.js'],
+          },
+        ],
+      },
+    }
+    t.eq(actual, expected)
+  })
+
+  test('flattens single ignore pattern', t => {
+    const actual = mergeInputs(
+      // cli
+      {
+        files: '*.spec.js',
+        cwd: '/app',
+        ignore: ['broken.test.js'],
+      }
+    )
+    const expected = {
+      files: {
+        cwd: '/app',
+        pattern: '*.spec.js',
+        ignore: [
+          {
+            cwd: '/app',
+            pattern: 'broken.test.js',
+          },
+        ],
+      },
+    }
+    t.eq(actual, expected)
+  })
+
   describe('watch', () => {
     test('only rc (no watch)', t => {
       const actual = mergeInputs(
