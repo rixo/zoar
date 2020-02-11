@@ -42,7 +42,7 @@
     "rollup": "^1.29.1",
     "zoar": "^0.0.1-0",
     "zora": "^3.1.8",
-    "zorax": "^0.0.3-0"
+    "zorax": "^0.0.3"
   },
   "scripts": {
     "clean": "rm dist/*",
