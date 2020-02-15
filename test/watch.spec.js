@@ -1,6 +1,6 @@
 import { describe, test } from '@@'
 
-import { mergeTargets } from '@/lib/zoar-watch'
+import { mergeTargets } from '@/lib/watch'
 
 const byDir = ({ dir: { length: a } }, { dir: { length: b } }) => a - b
 
