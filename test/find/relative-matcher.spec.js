@@ -1,4 +1,4 @@
-import { test, describe } from '@@/util'
+import { test, describe } from '@@'
 
 import matcher from '@/lib/find/relative-matcher'
 

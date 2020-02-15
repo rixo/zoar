@@ -1,4 +1,4 @@
-import { describe, test } from 'zorax'
+import { describe, test } from '@@'
 
 import { mergeTargets } from '@/lib/zoar-watch'
 

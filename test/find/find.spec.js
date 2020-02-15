@@ -1,6 +1,6 @@
-import * as path from 'path'
+import { test, describe } from '@@'
 
-import { test, describe } from '@@/util'
+import * as path from 'path'
 
 import find from '@/lib/find'
 import { mergeInputs } from '@/lib/find/find'
