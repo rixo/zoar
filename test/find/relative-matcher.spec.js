@@ -455,6 +455,27 @@ describe('matcher', () => {
         const actual = matcher({ cwd, pattern }, true)
         t.eq(actual.filenames, ['/app/a.js', '/test/b.md'])
         t.eq(actual.patterns, [])
+        t.eq(actual.ignorePatterns, ['/app/*.js'])
+      })
+
+      test('ignore pattern', t => {
+        const cwd = '/app'
+        const pattern = '*.js'
+        const ignore = '*.foo.js'
+        const actual = matcher({ cwd, pattern, ignore }, true)
+        t.eq(actual.filenames, [])
+        t.eq(actual.patterns, ['/app/*.js'])
+        t.eq(actual.ignorePatterns, ['/app/*.foo.js'])
+      })
+
+      test('ignore: mixed patterns & filename', t => {
+        const cwd = '/app'
+        const pattern = '*.js'
+        const ignore = ['foo.md', '*.foo.js']
+        const actual = matcher({ cwd, pattern, ignore }, true)
+        t.eq(actual.filenames, [])
+        t.eq(actual.patterns, ['/app/*.js'])
+        t.eq(actual.ignorePatterns, ['/app/foo.md', '/app/*.foo.js'])
       })
     }) // -- split: true
   })
