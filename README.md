@@ -2,13 +2,13 @@
 
 > Very opinionated test runner for Zorax
 
-_Zoar is the bloated yet sharp test runner for Zorax, the opinionated yet modular testing library built over Zora, the lightest yet fastest testing library._
+- does not marry your tests to your test runner
 
-[Zora](https://github.com/lorenzofox3/zora) is great. Fast, easy, simple. What's not to love?
+- advanced support for [Zorax](https://github.com/rixo/zorax)
 
-Zora comes with few features as a feature. It is unopinionated, so that you can implement the feature that _you_ want on top of it, without it ever getting in the way. Picking and putting all the other tools together can be time consuming, though; and now might not be the right time to hack the testing environment...
+- interactive watch CLI
 
-Zoar, together with its sister project [Zorax](https://github.com/rixo/zorax), aim to provide a zero-config quick start solution to your Zora testing, with a decent initial amount of developer comfort, that you can later progressively configure and extend to better fit your needs.
+- advanced pipeability
 
 ## Main functionalities
 
