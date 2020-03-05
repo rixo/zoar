@@ -2,7 +2,7 @@
   "name": "zoar",
   "version": "0.0.1",
   "author": "rixo <rixo@rixo.fr>",
-  "license": "MIT",
+  "license": "ISC",
   "homepage": "https://github.com/rixo/zoar",
   "bugs": {
     "url": "https://github.com/rixo/zoar/issues"
