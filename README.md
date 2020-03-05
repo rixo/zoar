@@ -10,6 +10,8 @@
 
 - advanced pipeability
 
+- TODO support for raw Zora (go nag in issues if you want it)
+
 ## Main functionalities
 
 - **find** test files by glob
