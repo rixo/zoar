@@ -2,7 +2,7 @@
 
 > Very opinionated test runner for Zorax
 
-- does not marry your tests to your test runner
+- does not marry your tests to the test runner
 
 - advanced support for [Zorax](https://github.com/rixo/zorax)
 
@@ -34,7 +34,7 @@
 
 - easily pipe output during watch (so you can use all those fancy TAP tools while working on your tests!)
 
-- pass `--inspect` and `--inspect-brk` flags to the node process running th tests
+- easily pass `--inspect` and `--inspect-brk` flags to the node process running the tests
 
 ## Philosohpy
 
