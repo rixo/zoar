@@ -45,7 +45,7 @@
     "tap-notify": "^1.0.0",
     "zoar": "^0.0.1-2",
     "zora": "^3.1.8",
-    "zorax": "^0.0.3"
+    "zorax": "^0.0.8"
   },
   "scripts": {
     "clean": "rm dist/*",
