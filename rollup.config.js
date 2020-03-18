@@ -4,6 +4,7 @@ import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import builtins from 'builtin-modules'
+import shebang from 'rollup-plugin-add-shebang'
 
 const makeExecutable = () => {
   const EXECUTABLE_MODE = 0o111
@@ -34,8 +35,6 @@ export default {
   output: {
     format: 'cjs',
     dir: 'dist',
-    chunkFileNames: '[name].js',
-    banner: '#!/usr/bin/env node',
     sourcemap: true,
   },
   external: [
@@ -44,5 +43,11 @@ export default {
     'zorax',
     'zora',
   ],
-  plugins: [json(), resolve(), commonjs(), makeExecutable()],
+  plugins: [
+    json(),
+    resolve(),
+    commonjs(),
+    makeExecutable(),
+    shebang({ include: 'dist/zoar.js' }),
+  ],
 }
