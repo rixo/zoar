@@ -14,7 +14,7 @@ const makeExecutable = () => {
     outputOptions({ dir }) {
       outputDir = dir
     },
-    writeBundle: bundle => {
+    writeBundle: bundle =>
       Promise.all(
         Object.entries(bundle)
           .filter(([, { isEntry }]) => isEntry)
@@ -25,8 +25,7 @@ const makeExecutable = () => {
             const newMode = mode | EXECUTABLE_MODE
             await fs.promises.chmod(file, newMode)
           })
-      )
-    },
+      ),
   }
 }
 
