@@ -16,7 +16,7 @@
     "dist"
   ],
   "bin": {
-    "zoar": "dist/zoar.js"
+    "zoar": "./cli.js"
   },
   "dependencies": {
     "arg": "^4.1.2",

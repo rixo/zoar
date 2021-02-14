@@ -8,4 +8,6 @@ if (hasMap) {
   require('source-map-support').install()
 }
 
-require('./dist/zoar.js')
+const { run } = require('./dist/zoar.js')
+
+run()
