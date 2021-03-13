@@ -1954,10 +1954,9 @@ yaml@^1.5.0:
   dependencies:
     "@babel/runtime" "^7.6.3"
 
-zoar@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/zoar/-/zoar-0.0.4.tgz#082e877dc50e6984d6b8a763ba66ad8c6f6f94cc"
-  integrity sha512-7EtSFuJHOXH0CdEmD5F9xpFs1RG4FdP+V5uUq03qm/tWpoOQa12WWfbWurBvkQ0sKkn52wEGIyfqzkqbfZlr7Q==
+zoar@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/zoar/-/zoar-0.2.0.tgz#919c95318f2b23565b7d98bfd73f6908555eb462"
   dependencies:
     arg "^4.1.2"
     cheap-watch "^1.0.2"
@@ -1973,7 +1972,7 @@ zoar@^0.0.4:
     zora-node-reporter rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg
     zora-tap-reporter "^2.0.0"
 
-zora-node-reporter@rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg:
+"zora-node-reporter@github:rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg", zora-node-reporter@rixo/zora-reporters#zora-node-reporter-v0.0.1-rixo.3-gitpkg:
   version "0.0.1-rixo.3"
   resolved "https://codeload.github.com/rixo/zora-reporters/tar.gz/002538be1e3fc28bc4bdca8e1bed15b20c8bd2e6"
 
