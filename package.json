@@ -1,6 +1,6 @@
 {
   "name": "zoar",
-  "version": "0.3.0-1",
+  "version": "0.3.0-2",
   "author": "rixo <rixo@rixo.fr>",
   "license": "ISC",
   "homepage": "https://github.com/rixo/zoar",
@@ -12,7 +12,10 @@
     "url": "git@github.com:rixo/zoar.git"
   },
   "main": "index.js",
-  "files": ["dist", "util.cjs"],
+  "files": [
+    "dist",
+    "util.cjs"
+  ],
   "bin": {
     "zoar": "./cli.js"
   },
