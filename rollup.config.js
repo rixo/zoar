@@ -5,6 +5,14 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import builtins from 'builtin-modules'
 import shebang from 'rollup-plugin-add-shebang'
+import del from 'rollup-plugin-delete'
+import pkg from './package.json'
+
+const external = ['../util.cjs'].concat(
+  Object.keys(pkg.dependencies || {}),
+  Object.keys(pkg.peerDependencies || {}),
+  Object.keys(process.binding('natives'))
+)
 
 const makeExecutable = () => {
   const EXECUTABLE_MODE = 0o111
@@ -41,8 +49,10 @@ export default {
     // NOTE zorax needs to be external to share global state
     'zorax',
     'zora',
+    ...external,
   ],
   plugins: [
+    del({ targets: 'dist/*' }),
     json(),
     resolve(),
     commonjs(),

@@ -5,7 +5,7 @@ globals:
   setTimeout: true
 
 overrides:
-  - files: ["index.js", "cli.js"]
+  - files: ["index.js", "cli.js", "rollup.config.js", "util.cjs"]
     env:
       node: true
       browser: true
