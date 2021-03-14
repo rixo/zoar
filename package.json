@@ -12,11 +12,7 @@
     "url": "git@github.com:rixo/zoar.git"
   },
   "main": "index.js",
-  "files": [
-    "dist",
-    "util.cjs",
-    "cli.js"
-  ],
+  "files": ["dist", "util.cjs", "cli.js"],
   "bin": {
     "zoar": "./cli.js"
   },
@@ -52,7 +48,7 @@
     "zorax": "^0.0.8"
   },
   "scripts": {
-    "clean": "rm dist/*",
+    "prepublish": "npm run build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test:autostart:default": "node -r esm test/autostart.spec.js",
