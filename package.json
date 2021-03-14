@@ -12,10 +12,7 @@
     "url": "git@github.com:rixo/zoar.git"
   },
   "main": "index.js",
-  "files": [
-    "dist",
-    "util.cjs"
-  ],
+  "files": ["dist", "util.cjs", "cli.js"],
   "bin": {
     "zoar": "./cli.js"
   },
