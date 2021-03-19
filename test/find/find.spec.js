@@ -1,9 +1,12 @@
-import { test, describe } from '@@'
+import { test, describe } from '../index.js'
 
 import * as path from 'path'
+import { fileURLToPath } from 'url'
 
-import find from '@/lib/find'
-import { mergeInputs } from '@/lib/find/find'
+import find from '../../lib/find.js'
+import { mergeInputs } from '../../lib/find/find.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 test('is a function', t => {
   t.isFunction(find)

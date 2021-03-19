@@ -22,7 +22,7 @@ const makeExecutable = () => {
     outputOptions({ dir }) {
       outputDir = dir
     },
-    writeBundle: bundle =>
+    writeBundle: (options, bundle) =>
       Promise.all(
         Object.entries(bundle)
           .filter(([, { isEntry }]) => isEntry)

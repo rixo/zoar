@@ -1,6 +1,6 @@
-import { test, describe } from '@@'
+import { test, describe } from '../index.js'
 
-import Parser, { parseCommandSpec } from '@/lib/watch/interactive'
+import Parser, { parseCommandSpec } from '../../lib/watch/interactive.js'
 
 test('Parser(commands)', t => {
   const parser = Parser(['--flag'])

@@ -1,10 +1,10 @@
-import { describe, test } from '@@'
+import { describe, test } from './index.js'
 
-import { mergeTargets } from '@/lib/watch'
+import { mergeTargets } from '../lib/watch.js'
 
 const byDir = ({ dir: { length: a } }, { dir: { length: b } }) => a - b
 
-describe(__filename)
+describe('watch.js')
 
 describe('mergeTargets', () => {
   test('merges targets into their deep watching parents', t => {

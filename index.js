@@ -1,3 +1,5 @@
-require('source-map-support').install()
+import sourcemap from 'source-map-support'
 
-module.exports = require('./dist/zoar.js')
+sourcemap.install()
+
+export { run } from './lib/zoar.js'

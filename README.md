@@ -167,7 +167,7 @@ describe('zoar', () => {
   })
   test('fail', t => {
     t.fail('hoh')
-  })  
+  })
   test.only('spy', t => {
     const spy = t.spy(() => 42)
     spy('foo')

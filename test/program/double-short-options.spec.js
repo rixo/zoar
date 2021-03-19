@@ -1,6 +1,6 @@
-import { test } from '@@'
+import { test } from '../index.js'
 
-import { parseDoubleShorts } from '@/lib/program/double-short-options'
+import { parseDoubleShorts } from '../../lib/program/double-short-options.js'
 
 const macro = (t, input, expected, doublables) => {
   const parse = parseDoubleShorts(doublables)

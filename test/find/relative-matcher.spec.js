@@ -1,8 +1,8 @@
-import { test, describe } from '@@'
+import { test, describe } from '../index.js'
 
-import matcher from '@/lib/find/relative-matcher'
+import matcher from '../../lib/find/relative-matcher.js'
 
-describe(__filename)
+describe('relative-matcher.js')
 
 const sample = [
   '/app/a.md',

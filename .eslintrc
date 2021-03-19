@@ -4,6 +4,10 @@ extends:
 globals:
   setTimeout: true
 
+settings:
+  import/core-modules:
+    - builtin-modules
+  
 overrides:
   - files: ["index.js", "cli.js", "rollup.config.js", "util.cjs"]
     env:
