@@ -7,9 +7,9 @@ globals:
 settings:
   import/core-modules:
     - builtin-modules
-  
+
 overrides:
-  - files: ["index.js", "cli.js", "rollup.config.js", "util.cjs"]
+  - files: ["index.js", "index.cjs", "cli.js", "rollup.config.js", "util.cjs"]
     env:
       node: true
       browser: true
