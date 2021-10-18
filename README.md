@@ -1,3 +1,9 @@
+# MIGRATED
+
+Migrated to [zorax monorepo](https://github.com/rixo/zorax/tree/master/packages/zoar)
+
+---
+
 # Zoar
 
 > Very opinionated test runner for Zorax
